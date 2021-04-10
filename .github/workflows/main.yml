@@ -1,0 +1,31 @@
+name: Build & Deploy My Portfolio
+on: push
+jobs:
+  hosting:
+    name: Deploy My Portfolio
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout Repository
+      - uses: actions/checkout@v1
+
+      # Install Flutter command
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "dev"
+
+      # Build Website
+      - name: Build My Portfolio
+        run: |
+          flutter config --enable-web
+          flutter pub get
+          flutter build web --release
+        working-directory: ./
+
+      # Deploy Firebase Hosting
+      - name: Deploy Firebase Hosting
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only hosting:portfolio-46378
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_PATH: ./

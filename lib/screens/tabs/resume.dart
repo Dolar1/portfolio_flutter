@@ -33,6 +33,19 @@ List<dynamic> _companies = [
     "is_confedential": true,
     "work_link":
         "https://play.google.com/store/apps/details?id=com.masterlife.masterlife"
+  },
+  {
+    "isPresent": false,
+    "name": "1stMain",
+    "logo": "main.png",
+    "position": "Software Developer Intern",
+    "tools": ["Nodejs", "Expressjs", "Flutter", "Firebase", "mongodb"],
+    "details":
+        "I was responsible for wrting and shipping 'RESPOSIBLE' flutter and node code to respective hostings",
+    "more_details": "",
+    "is_confedential": true,
+    "work_link":
+        "https://play.google.com/store/apps/details?id=com.masterlife.masterlife"
   }
 ];
 
