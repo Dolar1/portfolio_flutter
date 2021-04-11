@@ -2,6 +2,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/common_widgets/hover_effect.dart';
+import 'package:portfolio/common_widgets/social_links.dart';
 import 'package:portfolio/utils/colors.dart';
 
 class ContactMe extends StatelessWidget {
@@ -140,6 +141,11 @@ class ContactMe extends StatelessWidget {
       color: BG_COLOR,
       child: Stack(
         children: [
+          Positioned(
+            left: 10,
+            bottom: 0,
+            child: SocialLinks(),
+          ),
           Positioned(
             right: 0,
             bottom: 0,

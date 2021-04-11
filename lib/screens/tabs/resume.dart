@@ -1,6 +1,8 @@
+import 'dart:html' as html;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:portfolio/common_widgets/hover_effect.dart';
+import 'package:portfolio/common_widgets/social_links.dart';
 import 'package:portfolio/utils/colors.dart';
 
 List<dynamic> _companies = [
@@ -67,6 +69,11 @@ class _ResumeState extends State<Resume> {
       child: Stack(
         clipBehavior: Clip.none,
         children: [
+          Positioned(
+            left: 10,
+            bottom: 0,
+            child: SocialLinks(),
+          ),
           PageView.builder(
             controller: _scrollController,
             itemBuilder: (context, index) => Container(
@@ -99,94 +106,36 @@ class _ResumeState extends State<Resume> {
           Positioned(
             right: -10,
             top: _height / 2,
-            child: GestureDetector(
-              onTap: () {},
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: DARK_BG_COLOR,
-                  gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      Colors.white70,
-                      Color(0xFFe3e7f0),
-                      Color(0xFFffd8e4)
-                    ],
-                  ),
-                ),
-                width: _width > 1500 ? 100 : 75,
-                height: _width > 1500 ? 100 : 75,
-                child: Center(
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 10,
-                        child: Icon(
-                          Icons.chevron_right_outlined,
-                          size: 40,
-                          color: Colors.black.withOpacity(0.6),
-                        ),
-                      ),
-                      Icon(
-                        Icons.chevron_right_outlined,
-                        size: 40,
-                        color: Colors.black.withOpacity(0.6),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+            child: MoveBackAndForth(
+              direction: 1,
+              onPres: () {
+                _scrollController.nextPage(
+                  duration: Duration(milliseconds: 500),
+                  curve: Curves.easeIn,
+                );
+              },
             ),
           ),
           Positioned(
             left: -10,
             top: _height / 2,
-            child: GestureDetector(
-              onTap: () {},
-              child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: DARK_BG_COLOR,
-                  gradient: LinearGradient(
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                    colors: [
-                      Color(0xFFffd8e4),
-                      Color(0xFFe3e7f0),
-                      Colors.white70,
-                    ],
-                  ),
-                ),
-                width: _width > 1500 ? 100 : 75,
-                height: _width > 1500 ? 100 : 75,
-                child: Center(
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 10,
-                        child: Icon(
-                          Icons.chevron_left_outlined,
-                          size: 40,
-                          color: Colors.black.withOpacity(0.6),
-                        ),
-                      ),
-                      Icon(
-                        Icons.chevron_left_outlined,
-                        size: 40,
-                        color: Colors.black.withOpacity(0.6),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+            child: MoveBackAndForth(
+              direction: 0,
+              onPres: () {
+                _scrollController.previousPage(
+                  duration: Duration(milliseconds: 500),
+                  curve: Curves.easeIn,
+                );
+              },
             ),
           ),
           Positioned(
             right: 10,
             top: 10,
             child: GestureDetector(
-              onTap: () => null, //_launchURL(context, "phone"),
+              onTap: () {
+                html.window.open("assets/saurabh_singh_2021.pdf", "pdf");
+              },
               child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
@@ -222,6 +171,63 @@ class _ResumeState extends State<Resume> {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class MoveBackAndForth extends StatelessWidget {
+  Function onPres;
+  int direction;
+
+  MoveBackAndForth({@required this.onPres, @required this.direction});
+  @override
+  Widget build(BuildContext context) {
+    double _width = MediaQuery.of(context).size.width;
+    double _height = MediaQuery.of(context).size.height;
+
+    IconData _icon = direction == 0
+        ? Icons.chevron_left_outlined
+        : Icons.chevron_right_outlined;
+    return Container(
+      child: GestureDetector(
+        onTap: onPres,
+        child: Container(
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: DARK_BG_COLOR,
+            gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                Color(0xFFffd8e4),
+                Color(0xFFe3e7f0),
+                Colors.white70,
+              ],
+            ),
+          ),
+          width: _width > 1500 ? 100 : 75,
+          height: _width > 1500 ? 100 : 75,
+          child: Center(
+            child: Stack(
+              children: [
+                Positioned(
+                  left: 10,
+                  child: Icon(
+                    _icon,
+                    size: 40,
+                    color: Colors.black.withOpacity(0.6),
+                  ),
+                ),
+                Icon(
+                  _icon,
+                  size: 40,
+                  color: Colors.black.withOpacity(0.6),
+                )
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }
